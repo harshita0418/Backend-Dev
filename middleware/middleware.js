@@ -53,23 +53,36 @@ app.listen(8000,()=>console.log("Server started on port 8000"));
 
 // Authentication middleware
 
-const authenticate=(req,res,next)=>{
-    const token=req.headers.authorization;  
-    if(!token){
-        return res.status(401).send("Token is required");
-    }
-    
-    if(token !="harshita"){
-        return res.status(401).send("Invalid token");
-    }
-    
-    next(); // Token is valid, proceed to the next middleware or route handler
+const authMiddleware = (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(403).json({ message: "Token required" });
+  }
+
+  if (token !== "harshita") {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+
+  next();
 };
 
-app.get("/profile",authenticate,(req,res)=>{
-    res.json({ message:"Welcome to your profile!"});
+app.get("/profile", authMiddleware, (req, res) => {
+  res.json({ message: "Profile data" });
+});   
+
+//Error Handling Middleware
+
+app.get("/error", (req, res) => {
+  throw new Error("Something went wrong!");
 });
 
-app.listen(8000,()=>console.log("Server started on port 8000"));    
+app.use((err, req, res, next) => {
+  console.error("Error Middleware:", err.message);
+  res.status(500).json({
+    message: "Internal Server Error",
+  });
+});
 
+app.listen(8000, () => console.log("Server Started"));
 

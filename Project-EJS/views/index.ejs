@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+
+    <section class="hero">
+        <h2>
+            <%= title %>
+        </h2>
+        <p>
+            <%= message %>
+        </p>
+
+        <% if (showWelcome) { %>
+            <div style="margin-top: 2rem; color: #764ba2; font-weight: 600;">
+                Conditionals in EJS: You see this because 'showWelcome' is true!
+            </div>
+            <% } %>
+    </section>
+
+    <h3>Core Features Learned:</h3>
+    <div class="feature-list">
+        <% features.forEach(feature=> { %>
+            <div class="feature-card">
+                <h4>
+                    <%= feature %>
+                </h4>
+                <p>Mastering <%= feature.toLowerCase() %> is key to dynamic apps.</p>
+            </div>
+            <% }) %>
+    </div>
+
+    <%- include('partials/footer') %>

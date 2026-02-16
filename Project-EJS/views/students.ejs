@@ -1,0 +1,51 @@
+<%- include('partials/header') %>
+
+    <section class="hero">
+        <h2>
+            <%= title %>
+        </h2>
+        <p>Rendering an array of objects using a forEach loop in EJS.</p>
+    </section>
+
+    <div class="data-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Grade</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% students.forEach(student=> { %>
+                    <tr>
+                        <td>
+                            <%= student.id %>
+                        </td>
+                        <td><strong>
+                                <%= student.name %>
+                            </strong></td>
+                        <td>
+                            <%= student.age %>
+                        </td>
+                        <td>
+                            <%= student.grade %>
+                        </td>
+                        <td>
+                            <span class="status <%= student.active ? 'status-active' : 'status-inactive' %>">
+                                <%= student.active ? 'Active' : 'Inactive' %>
+                            </span>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-top: 2rem; text-align: center; color: #666;">
+        Total Students: <%= students.length %>
+    </p>
+
+    <%- include('partials/footer') %>

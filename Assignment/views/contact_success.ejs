@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Message Sent!</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f4f6f9; display: flex; justify-content: center; padding: 3rem; }
+    .card { background: #fff; padding: 2rem 2.5rem; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,.1); max-width: 480px; text-align: center; }
+    h1 { color: #27ae60; }
+    p { color: #555; line-height: 1.6; }
+    .summary { background: #f9f9f9; border-radius: 8px; padding: 1rem; text-align: left; margin-top: 1.2rem; font-size: .9rem; }
+    dt { font-weight: 600; color: #333; margin-top: .5rem; }
+    dd { margin: 0; color: #555; }
+    a { color: #4a6cf7; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>✅ Message Sent!</h1>
+    <p>Thanks, <strong><%= name %></strong>! We'll reply to <strong><%= email %></strong> shortly.</p>
+    <dl class="summary">
+      <% if (subject) { %><dt>Subject</dt><dd><%= subject %></dd><% } %>
+      <dt>Message</dt><dd><%= message %></dd>
+    </dl>
+    <p style="margin-top:1.5rem"><a href="/contact">← Send another message</a></p>
+  </div>
+</body>
+</html>

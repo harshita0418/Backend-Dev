@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Photo Gallery</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; background: #111; color: #eee; margin: 0; padding: 1.5rem; }
+    h1 { text-align: center; margin-bottom: 1.5rem; }
+    .filters { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+    .filters a { text-decoration: none; padding: .4rem 1rem; border-radius: 20px; background: #222; color: #aaa; border: 1px solid #333; font-size: .85rem; }
+    .filters a.active, .filters a:hover { background: #6366f1; color: #fff; border-color: #6366f1; }
+    .gallery { columns: 4 200px; column-gap: 12px; }
+    .photo-card { break-inside: avoid; margin-bottom: 12px; border-radius: 8px; overflow: hidden; background: #1e1e1e; cursor: pointer; }
+    .photo-card:hover { transform: scale(1.02); }
+    .photo-card img { width: 100%; display: block; }
+    .caption { padding: .5rem .75rem; font-size: .8rem; color: #aaa; display: flex; justify-content: space-between; }
+    .tag { background: #2d2d2d; border-radius: 4px; padding: .15rem .45rem; font-size: .7rem; }
+    .empty { text-align: center; color: #666; margin-top: 3rem; }
+    #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 999; align-items: center; justify-content: center; flex-direction: column; }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 90vw; max-height: 80vh; border-radius: 8px; }
+    .lb-caption { color: #ccc; margin-top: .8rem; }
+    .close-btn { position: absolute; top: 1.2rem; right: 1.5rem; font-size: 2rem; color: #fff; cursor: pointer; background: none; border: none; }
+  </style>
+</head>
+<body>
+  <h1>Photo Gallery</h1>
+
+  <nav class="filters">
+    <a href="/gallery" class="<%= !activeTag ? 'active' : '' %>">All</a>
+    <% tags.forEach(tag => { %>
+      <a href="/gallery?tag=<%= tag %>" class="<%= activeTag === tag ? 'active' : '' %>"><%= tag %></a>
+    <% }) %>
+  </nav>
+
+  <% if (photos.length === 0) { %>
+    <p class="empty">No photos found.</p>
+  <% } else { %>
+    <div class="gallery">
+      <% photos.forEach(photo => { %>
+        <div class="photo-card" onclick="openLightbox('<%= photo.src %>', '<%= photo.alt %>')">
+          <img src="<%= photo.src %>" alt="<%= photo.alt %>" loading="lazy" />
+          <div class="caption"><span><%= photo.alt %></span><span class="tag"><%= photo.tag %></span></div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <div id="lightbox">
+    <button class="close-btn" onclick="closeLightbox()">✕</button>
+    <img id="lb-img" src="" alt="" />
+    <p class="lb-caption" id="lb-caption"></p>
+  </div>
+
+  <script>
+    function openLightbox(src, caption) {
+      document.getElementById('lb-img').src = src;
+      document.getElementById('lb-caption').textContent = caption;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+    document.getElementById('lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') closeLightbox(); });
+  </script>
+</body>
+</html>

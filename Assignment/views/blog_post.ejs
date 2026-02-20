@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= post.title %></title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: #fafafa; color: #222; margin: 0; padding: 2rem 1rem; }
+    .container { max-width: 680px; margin: 0 auto; }
+    .back { font-family: system-ui; font-size: .85rem; color: #2563eb; text-decoration: none; display: inline-block; margin-bottom: 1.8rem; }
+    .meta { font-family: system-ui; font-size: .85rem; color: #888; margin-bottom: .75rem; }
+    .tag { background: #eff6ff; color: #2563eb; border-radius: 4px; padding: .15rem .5rem; }
+    h1 { margin: 0 0 .75rem; font-size: 2rem; }
+    hr { border: none; border-top: 2px solid #eee; margin: 1.5rem 0; }
+    .body { line-height: 1.8; font-size: 1.05rem; white-space: pre-wrap; }
+    .btn-back { text-decoration: none; padding: .5rem 1.1rem; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; border-radius: 6px; font-family: system-ui; font-size: .9rem; display: inline-block; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="/blog">← All Posts</a>
+    <div class="meta">
+      <%= new Date(post.createdAt).toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) %>
+      <% if (post.category) { %><span class="tag"><%= post.category %></span><% } %>
+    </div>
+    <h1><%= post.title %></h1>
+    <hr />
+    <div class="body"><%= post.body %></div>
+    <a class="btn-back" href="/blog">← Back to Posts</a>
+  </div>
+</body>
+</html>

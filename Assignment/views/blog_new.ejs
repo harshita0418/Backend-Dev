@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>New Post</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; background: #fafafa; color: #222; margin: 0; padding: 2rem 1rem; }
+    .container { max-width: 680px; margin: 0 auto; }
+    .back { font-size: .85rem; color: #2563eb; text-decoration: none; display: inline-block; margin-bottom: 1.5rem; }
+    h1 { margin-top: 0; font-family: Georgia, serif; }
+    .flash-error { background: #fde8e8; border: 1px solid #e74c3c; padding: .75rem 1rem; border-radius: 6px; margin-bottom: 1rem; color: #c0392b; }
+    label { display: block; margin-top: 1rem; font-weight: 600; }
+    input, textarea, select { width: 100%; padding: .55rem .75rem; margin-top: .3rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; background: #fff; }
+    textarea { min-height: 260px; resize: vertical; font-family: Georgia, serif; line-height: 1.6; }
+    .actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+    button { padding: .6rem 1.4rem; background: #2563eb; color: #fff; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+    .cancel { text-decoration: none; padding: .6rem 1rem; color: #64748b; border: 1px solid #e2e8f0; border-radius: 6px; background: #f8fafc; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="/blog">← All Posts</a>
+    <h1>New Post</h1>
+
+    <% if (errors && errors.length) { %>
+      <div class="flash-error">
+        <strong>Please fix these errors:</strong>
+        <ul><% errors.forEach(e => { %><li><%= e %></li><% }) %></ul>
+      </div>
+    <% } %>
+
+    <% const v = old || {}; %>
+    <form action="/blog" method="POST">
+      <label>Title *</label>
+      <input type="text" name="title" value="<%= v.title || '' %>" placeholder="Enter a title…" />
+
+      <label>Category</label>
+      <select name="category">
+        <option value="">— Uncategorized —</option>
+        <% ['Technology','Travel','Food','Lifestyle','Opinion','Tutorial'].forEach(cat => { %>
+          <option value="<%= cat %>" <%= v.category === cat ? 'selected' : '' %>><%= cat %></option>
+        <% }) %>
+      </select>
+
+      <label>Content *</label>
+      <textarea name="body" placeholder="Write your post here…"><%= v.body || '' %></textarea>
+
+      <div class="actions">
+        <button type="submit">Publish Post</button>
+        <a class="cancel" href="/blog">Cancel</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

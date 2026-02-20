@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Us</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; background: #f4f6f9; display: flex; justify-content: center; padding: 2rem; }
+    .card { background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,.1); width: 100%; max-width: 520px; }
+    h1 { margin-top: 0; }
+    label { display: block; margin-top: 1rem; font-weight: 600; }
+    input, textarea, select { width: 100%; padding: .55rem .75rem; margin-top: .3rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+    textarea { resize: vertical; min-height: 110px; }
+    .flash-error { background: #fde8e8; border: 1px solid #e74c3c; padding: .75rem 1rem; border-radius: 6px; margin-bottom: 1rem; color: #c0392b; }
+    button { margin-top: 1.4rem; width: 100%; padding: .7rem; background: #4a6cf7; color: #fff; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+    button:hover { background: #3a5ce7; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Contact Us</h1>
+
+    <% if (errors && errors.length) { %>
+      <div class="flash-error">
+        <strong>Please fix the following:</strong>
+        <ul><% errors.forEach(e => { %><li><%= e %></li><% }) %></ul>
+      </div>
+    <% } %>
+
+    <% const v = old || {}; %>
+    <form action="/contact" method="POST">
+      <label>Full Name *</label>
+      <input type="text" name="name" value="<%= v.name || '' %>" placeholder="Jane Doe" />
+
+      <label>Email *</label>
+      <input type="email" name="email" value="<%= v.email || '' %>" placeholder="jane@example.com" />
+
+      <label>Subject</label>
+      <select name="subject">
+        <option value="">— Select a topic —</option>
+        <% ['General Inquiry','Support','Billing','Feedback','Other'].forEach(opt => { %>
+          <option value="<%= opt %>" <%= v.subject === opt ? 'selected' : '' %>><%= opt %></option>
+        <% }) %>
+      </select>
+
+      <label>Message *</label>
+      <textarea name="message" placeholder="Your message…"><%= v.message || '' %></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</body>
+</html>

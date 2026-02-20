@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Blog</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: #fafafa; color: #222; margin: 0; padding: 2rem 1rem; }
+    .header { max-width: 720px; margin: 0 auto 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 1.8rem; margin: 0; }
+    .btn { text-decoration: none; background: #2563eb; color: #fff; padding: .5rem 1.1rem; border-radius: 6px; font-family: system-ui; font-size: .9rem; }
+    .posts { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; }
+    .post-card { background: #fff; border-radius: 10px; padding: 1.5rem 2rem; box-shadow: 0 1px 6px rgba(0,0,0,.08); text-decoration: none; color: inherit; display: block; border-left: 4px solid transparent; }
+    .post-card:hover { border-left-color: #2563eb; }
+    .meta { font-family: system-ui; font-size: .8rem; color: #888; margin-bottom: .5rem; }
+    .tag { background: #eff6ff; color: #2563eb; border-radius: 4px; padding: .15rem .5rem; margin-left: .5rem; }
+    .post-card h2 { margin: 0 0 .5rem; font-size: 1.35rem; }
+    .post-card p { margin: 0; color: #555; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>My Blog</h1>
+    <a class="btn" href="/blog/new">+ New Post</a>
+  </div>
+
+  <% if (posts.length === 0) { %>
+    <p style="text-align:center;color:#888">No posts yet. <a href="/blog/new">Write the first one!</a></p>
+  <% } else { %>
+    <section class="posts">
+      <% posts.forEach(post => { %>
+        <a class="post-card" href="/blog/<%= post.id %>">
+          <div class="meta">
+            <%= new Date(post.createdAt).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }) %>
+            <% if (post.category) { %><span class="tag"><%= post.category %></span><% } %>
+          </div>
+          <h2><%= post.title %></h2>
+          <p><%= post.body.substring(0, 160) %><%= post.body.length > 160 ? '…' : '' %></p>
+        </a>
+      <% }) %>
+    </section>
+  <% } %>
+</body>
+</html>

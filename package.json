@@ -1,0 +1,16 @@
+{
+  "name": "middleware-exercises",
+  "version": "1.0.0",
+  "scripts": {
+    "ex1": "node exercise1-request-logger.js",
+    "ex2": "node exercise2-mfa.js",
+    "ex3": "node exercise3-activity-tracker.js",
+    "ex4": "node exercise4-soft-delete.js",
+    "ex5": "node exercise5-sanitization.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0"
+  }
+}
